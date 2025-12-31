@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Listado de estudiantes</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 1.25rem 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.navbar-brand {
+  color: #000000 !important;
+  font-weight: 600;
+  font-size: 1.125rem;
+  letter-spacing: -0.01em;
+}
+
+.nav-link {
+  color: #666666 !important;
+  font-weight: 500;
+  font-size: 0.9375rem;
+}
+
+.nav-link:hover {
+  color: #000000 !important;
+}
+
+.container {
+  max-width: 1200px;
+  margin-top: 3rem;
+  padding: 0 1.5rem;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: #000000;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.action-bar {
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #000000;
+  transition: all 0.15s ease;
+}
+
+.btn-primary {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: #333333;
+  border-color: #333333;
+}
+
+.btn-edit {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #d0d0d0;
+  padding: 0.375rem 0.875rem;
+  font-size: 0.8125rem;
+}
+
+.btn-edit:hover {
+  background-color: #000000;
+  color: #ffffff;
+  border-color: #000000;
+}
+
+.btn-delete {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #d0d0d0;
+  padding: 0.375rem 0.875rem;
+  font-size: 0.8125rem;
+  margin-left: 0.5rem;
+}
+
+.btn-delete:hover {
+  background-color: #000000;
+  color: #ffffff;
+  border-color: #000000;
+}
+
+.table-container {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table thead th {
+  background-color: #fafafa;
+  color: #000000;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 1rem;
+  border-top: none;
+}
+
+.table tbody td {
+  color: #333333;
+  font-size: 0.9375rem;
+  padding: 1rem;
+  vertical-align: middle;
+  border-top: 1px solid #f0f0f0;
+}
+
+.table tbody tr:hover {
+  background-color: #fafafa;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: transparent;
+}
+</style>
+</head>
+<body>
+	<nav class="navbar navbar-expand-md">
+		<div class="container">
+			<a class="navbar-brand" href="#">Control de estudiantes</a>
+			<div class="collapse navbar-collapse" id="collapsibleNavbar">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/estudiantes}">Control de estudiantes</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-header">
+					<h1>Lista de estudiantes</h1>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<div class="action-bar">
+					<a th:href="@{/estudiantes/nuevo}" class="btn btn-primary">Agregar estudiante</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<div class="table-container">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Nombre</th>
+								<th>Apellido</th>
+								<th>Email</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="estudiante : ${estudiantes}">
+								<td th:text="${estudiante.nombre}">Nombre</td>
+								<td th:text="${estudiante.apellido}">Apellido</td>
+								<td th:text="${estudiante.email}">Email</td>
+								<td>
+									<a th:href="@{/estudiantes/editar/{id}(id=${estudiante.id})}" class="btn btn-edit">Editar</a>
+									<a th:href="@{/estudiantes/{id}(id=${estudiante.id})}" class="btn btn-delete">Eliminar</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
